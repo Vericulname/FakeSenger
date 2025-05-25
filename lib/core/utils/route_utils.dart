@@ -1,4 +1,5 @@
 import 'package:chat_app_fr_this_time/core/constants/string.dart';
+import 'package:chat_app_fr_this_time/ui/screen/auth/login/login_screen.dart';
 import 'package:chat_app_fr_this_time/ui/screen/auth/signup/signup_screen.dart';
 import 'package:chat_app_fr_this_time/ui/screen/home/homescreen.dart';
 import 'package:chat_app_fr_this_time/ui/splashscreen/splashscreen.dart';
@@ -16,6 +17,8 @@ class RouteUtils {
         return MaterialPageRoute(builder: (context) => Splashscreen());
       case signup:
         return MaterialPageRoute(builder: (context) => SignupScreen());
+      case login:
+        return MaterialPageRoute(builder: (context) => LoginScreen());
       default:
         return MaterialPageRoute(
           builder:

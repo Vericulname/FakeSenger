@@ -1,15 +1,12 @@
-import 'dart:developer';
-
 import 'package:chat_app_fr_this_time/core/constants/color.dart';
-import 'package:chat_app_fr_this_time/core/constants/string.dart';
 import 'package:chat_app_fr_this_time/core/constants/text_style.dart';
-import 'package:chat_app_fr_this_time/ui/wiget/customButton.dart';
-import 'package:chat_app_fr_this_time/ui/wiget/customTextField.dart';
+import 'package:chat_app_fr_this_time/ui/wiget/CustomButton.dart';
+import 'package:chat_app_fr_this_time/ui/wiget/CustomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,28 +17,29 @@ class SignupScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             30.verticalSpace,
-            Text("Đăng ký tài khoản", style: h),
+            Text("Đăng nhập tài khoản", style: h),
             20.verticalSpace,
             Text("Hãy nhập thông tin của bạn", style: small),
             30.verticalSpace,
-            CustomTextField(hintText: "Tên tài khoản"),
-            30.verticalSpace,
+
             CustomTextField(hintText: "Email"),
             30.verticalSpace,
             CustomTextField(hintText: "Mật khẩu"),
             30.verticalSpace,
-            CustomTextField(hintText: "Nhập lại mật khẩu"),
-            30.verticalSpace,
-            CustomButton(onPressed: () {}, buttonName: "Đăng ký"),
+            CustomButton(onPressed: () {}, buttonName: "Đăng nhập"),
             10.verticalSpace,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Đã có tài khoản? ", style: small.copyWith(color: grey)),
+                Text("Chưa có tài khoản? ", style: small.copyWith(color: grey)),
                 InkWell(
-                  onTap: () => Navigator.pushNamed(context, login),
+                  onTap: () {
+                    try {
+                      Navigator.pop(context);
+                    } catch (e) {}
+                  },
                   child: Text(
-                    "Đăng nhập",
+                    "Đăng ký",
                     style: small.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),

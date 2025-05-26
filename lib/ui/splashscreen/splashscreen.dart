@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:chat_app_fr_this_time/core/constants/string.dart';
+import 'package:chat_app_fr_this_time/ui/wrapper/wrapper.dart';
 import 'package:flutter/material.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<Splashscreen> {
   void initState() {
     super.initState();
     _timer = Timer(Duration(seconds: 3), () {
-      Navigator.pushNamed(context, signup);
+      Navigator.pushNamed(context, wrapper);
     });
   }
 

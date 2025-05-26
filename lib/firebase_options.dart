@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'fakesenger-9473b.firebasestorage.app',
     iosBundleId: 'com.example.chatAppFrThisTime',
   );
+
 }

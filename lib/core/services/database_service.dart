@@ -1,16 +1,18 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
   final _db = FirebaseFirestore.instance;
 
   Future<Map<String, dynamic>?> loadUser(String uid) async {
     try {
+      log("uid: $uid");
       final res = await _db.collection("user").doc(uid).get();
+      log("res: ${res.data()}");
+
       if (res.data() != null) {
-        log("lấy người dùng thành công");
+        log("lấy thông tin thành công");
         return res.data();
       }
     } catch (e) {
@@ -27,4 +29,9 @@ class DatabaseService {
       rethrow;
     }
   }
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> fetchUserStream(
+    String currentUid,
+  ) =>
+      _db.collection("user").where("uid", isNotEqualTo: currentUid).snapshots();
 }

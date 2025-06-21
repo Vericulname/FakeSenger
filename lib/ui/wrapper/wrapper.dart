@@ -1,6 +1,6 @@
 import 'package:chat_app_fr_this_time/provider/user_provide.dart';
 import 'package:chat_app_fr_this_time/ui/screen/auth/login/login_screen.dart';
-import 'package:chat_app_fr_this_time/ui/screen/home/homescreen.dart';
+import 'package:chat_app_fr_this_time/ui/screen/home/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDdYhpX1ILkadcQbgAA9ijflRtywykrE44',
-    appId: '1:550593041350:android:9082a9c1114a91d19098c7',
+    appId: '1:550593041350:android:be011804eb3351b19098c7',
     messagingSenderId: '550593041350',
     projectId: 'fakesenger-9473b',
     storageBucket: 'fakesenger-9473b.firebasestorage.app',
@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDLnv6OJzVRj8hz2SQLMwamhDrofSvVaec',
-    appId: '1:550593041350:ios:0375cb4c81f608329098c7',
+    appId: '1:550593041350:ios:b0058803d68ff6499098c7',
     messagingSenderId: '550593041350',
     projectId: 'fakesenger-9473b',
     storageBucket: 'fakesenger-9473b.firebasestorage.app',

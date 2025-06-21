@@ -13,6 +13,7 @@ class UserProvider extends ChangeNotifier {
 
   loadUser(String uid) async {
     final data = await _db.loadUser(uid);
+
     if (data != null) {
       _currentUser = UserModel.fromMap(data);
       notifyListeners();

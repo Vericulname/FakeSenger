@@ -34,9 +34,12 @@ class LoginScreen extends StatelessWidget {
                   Text("Hãy nhập thông tin của bạn", style: small),
                   30.verticalSpace,
 
-                  CustomTextField(hintText: "Email"),
+                  CustomTextField(hintText: "Email", onChanged: model.setEmail),
                   30.verticalSpace,
-                  CustomTextField(hintText: "Mật khẩu"),
+                  CustomTextField(
+                    hintText: "Mật khẩu",
+                    onChanged: model.setPassword,
+                  ),
                   30.verticalSpace,
                   CustomButton(
                     onPressed: () {

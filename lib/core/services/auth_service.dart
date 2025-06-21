@@ -6,11 +6,11 @@ import 'package:firebase_core/firebase_core.dart';
 class AuthService {
   final _auth = FirebaseAuth.instance;
 
-  Future login(String email, String Password) async {
+  Future login(String email, String password) async {
     try {
       final authCredential = await _auth.signInWithEmailAndPassword(
         email: email,
-        password: Password,
+        password: password,
       );
       if (authCredential != null) {
         log("Đăng nhập thành công");

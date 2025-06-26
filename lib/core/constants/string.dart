@@ -1,6 +1,8 @@
 const home = "/home";
 const splash = "/splashscreen";
 const wrapper = "/wrapper";
+const chatRoom = "/chatRoom";
+const chatList = "/chatList";
 
 //auth
 const login = "/login";

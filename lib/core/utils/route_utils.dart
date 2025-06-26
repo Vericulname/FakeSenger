@@ -1,6 +1,7 @@
 import 'package:chat_app_fr_this_time/core/constants/string.dart';
 import 'package:chat_app_fr_this_time/ui/screen/auth/login/login_screen.dart';
 import 'package:chat_app_fr_this_time/ui/screen/auth/signup/signup_screen.dart';
+import 'package:chat_app_fr_this_time/ui/screen/home/chatRoom/chatRoom_screen.dart';
 import 'package:chat_app_fr_this_time/ui/screen/home/home_screen.dart';
 import 'package:chat_app_fr_this_time/ui/splashscreen/splashscreen.dart';
 import 'package:chat_app_fr_this_time/ui/wrapper/wrapper.dart';
@@ -22,6 +23,8 @@ class RouteUtils {
         return MaterialPageRoute(builder: (context) => LoginScreen());
       case wrapper:
         return MaterialPageRoute(builder: (context) => Wrapper());
+      case chatRoom:
+        return MaterialPageRoute(builder: (context) => ChatroomScreen());
       default:
         return MaterialPageRoute(
           builder:

@@ -1,4 +1,5 @@
 import 'package:chat_app_fr_this_time/core/constants/color.dart';
+import 'package:chat_app_fr_this_time/core/constants/string.dart';
 import 'package:chat_app_fr_this_time/core/constants/text_style.dart';
 import 'package:chat_app_fr_this_time/core/model/user_model.dart';
 import 'package:chat_app_fr_this_time/core/services/database_service.dart';
@@ -33,7 +34,7 @@ class ChatlistScreen extends StatelessWidget {
                   child: Text("chat", style: h),
                 ),
                 20.verticalSpace,
-                CustomTextField(hintText: "tìm kiếm"),
+                CustomTextField(hintText: "tìm kiếm", isSearch: true),
                 20.verticalSpace,
                 Expanded(
                   child: ListView.separated(
@@ -42,7 +43,15 @@ class ChatlistScreen extends StatelessWidget {
                     itemCount: model.users.length,
                     itemBuilder: (context, index) {
                       final user = model.users[index];
-                      return ChatListTile(user: user, onTap: () {});
+                      return ChatListTile(
+                        user: user,
+                        onTap:
+                            () => Navigator.pushNamed(
+                              context,
+                              chatRoom,
+                              arguments: user,
+                            ),
+                      );
                     },
                   ),
                 ),
@@ -56,9 +65,9 @@ class ChatlistScreen extends StatelessWidget {
 }
 
 class ChatListTile extends StatelessWidget {
-  const ChatListTile({super.key, this.user, this.onTap});
+  const ChatListTile({super.key, required this.user, this.onTap});
 
-  final UserModel? user;
+  final UserModel user;
   final void Function()? onTap;
 
   @override
@@ -66,13 +75,13 @@ class ChatListTile extends StatelessWidget {
     return Material(
       child: ListTile(
         onTap: onTap,
-        tileColor: grey,
+        tileColor: grey.withOpacity(0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.r),
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 1.sw * 0.05),
-        leading: CircleAvatar(child: Text("T")),
-        title: Text("text"),
+        leading: CircleAvatar(child: Text(user.username![0])),
+        title: Text(user.username!),
         subtitle: Text(
           "last message213123123131212312313231323322323233223",
           overflow: TextOverflow.ellipsis,

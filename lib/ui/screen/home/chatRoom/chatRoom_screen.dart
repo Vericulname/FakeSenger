@@ -1,39 +1,77 @@
 import 'package:chat_app_fr_this_time/core/constants/color.dart';
 import 'package:chat_app_fr_this_time/core/constants/text_style.dart';
+import 'package:chat_app_fr_this_time/core/model/user_model.dart';
+import 'package:chat_app_fr_this_time/core/services/chat_service.dart';
+import 'package:chat_app_fr_this_time/extensions/snackBar_extension.dart';
+import 'package:chat_app_fr_this_time/provider/user_provide.dart';
+import 'package:chat_app_fr_this_time/ui/screen/home/chatRoom/chatRoom_viewmodel.dart';
 import 'package:chat_app_fr_this_time/ui/screen/home/chatRoom/chat_wiget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class ChatroomScreen extends StatelessWidget {
-  const ChatroomScreen({super.key});
+  const ChatroomScreen({super.key, required this.receiver});
+
+  final UserModel receiver;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 1.sw * 0.05,
-              vertical: 10.h,
-            ),
-            child: Column(
+    final currentUser = Provider.of<UserProvider>(context).user;
+    return ChangeNotifierProvider(
+      create:
+          (context) => ChatroomViewmodel(ChatService(), currentUser!, receiver),
+      child: Consumer<ChatroomViewmodel>(
+        builder: (context, model, _) {
+          return Scaffold(
+            body: Column(
               children: [
-                15.verticalSpace,
-                _headerBuilder(context),
-                15.verticalSpace,
-                // Expanded(
-                //   child: ListView.separated(
-                //     separatorBuilder: (context, index) => 10.verticalSpace,
-                //     itemCount: 10,
-                //     itemBuilder: (context, index) {},
-                //   ),
-                // ),
-                BottomChatBar(),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 1.sw * 0.05,
+                      vertical: 10.h,
+                    ),
+                    child: Column(
+                      children: [
+                        15.verticalSpace,
+                        _headerBuilder(context),
+                        15.verticalSpace,
+                        Expanded(
+                          child: ListView.separated(
+                            padding: const EdgeInsets.all(0),
+                            separatorBuilder:
+                                (context, index) => 10.verticalSpace,
+                            itemCount: model.messages.length,
+                            itemBuilder: (context, index) {
+                              final message = model.messages[index];
+                              return ChatBubble(
+                                isCurrentUser:
+                                    message.senderId == currentUser!.uid,
+                                message: message,
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                BottomChatBar(
+                  controller: model.controller,
+                  onTap: () async {
+                    try {
+                      await model.saveMessage();
+                    } catch (e) {
+                      context.showSnackBar(e.toString());
+                    }
+                  },
+                ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -53,7 +91,7 @@ class ChatroomScreen extends StatelessWidget {
           ),
         ),
         10.horizontalSpace,
-        const Text("user name", style: h),
+        Text(receiver.username!, style: h),
         const Spacer(),
         Container(child: Icon(Icons.more_vert_outlined)),
       ],

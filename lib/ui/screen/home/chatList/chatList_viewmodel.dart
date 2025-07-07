@@ -14,7 +14,7 @@ class ChatlistViewmodel extends Baseviewmodel {
   List<UserModel> get users => _users;
 
   List<UserModel> _filterusers = [];
-  List<UserModel> get filterusers => _users;
+  List<UserModel> get filterusers => _filterusers;
 
   ChatlistViewmodel(this._db, this._user) {
     fetchUser();
@@ -23,11 +23,13 @@ class ChatlistViewmodel extends Baseviewmodel {
   fetchUser() async {
     try {
       setState(ViewState.loading);
+
       _db.fetchUserStream(_user.uid!).listen((Data) {
         _users = Data.docs.map((e) => UserModel.fromMap(e.data())).toList();
         _filterusers = _users;
         notifyListeners();
       });
+
       setState(ViewState.idle);
     } catch (e) {
       setState(ViewState.idle);
@@ -37,7 +39,9 @@ class ChatlistViewmodel extends Baseviewmodel {
 
   searchUser(String val) {
     _filterusers =
-        _users.where((e) => e.username!.toLowerCase().contains(val)).toList();
+        _users
+            .where((e) => e.username!.toLowerCase().contains(val.toLowerCase()))
+            .toList();
     notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import 'package:chat_app_fr_this_time/ui/screen/home/chatList/chatList_viewmodel
 import 'package:chat_app_fr_this_time/ui/wiget/CustomTextField.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class ChatlistScreen extends StatelessWidget {
@@ -34,26 +35,39 @@ class ChatlistScreen extends StatelessWidget {
                   child: Text("chat", style: h),
                 ),
                 20.verticalSpace,
-                CustomTextField(hintText: "tìm kiếm", isSearch: true),
+                CustomTextField(
+                  hintText: "tìm kiếm",
+                  isSearch: true,
+                  onChanged: model.searchUser,
+                ),
                 20.verticalSpace,
                 Expanded(
-                  child: ListView.separated(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 0),
-                    separatorBuilder: (context, index) => 10.verticalSpace,
-                    itemCount: model.users.length,
-                    itemBuilder: (context, index) {
-                      final user = model.users[index];
-                      return ChatListTile(
-                        user: user,
-                        onTap:
-                            () => Navigator.pushNamed(
-                              context,
-                              chatRoom,
-                              arguments: user,
+                  child:
+                      model.filterusers.isEmpty
+                          ? const Expanded(
+                            child: Center(child: Text("Trống trơn :(")),
+                          )
+                          : ListView.separated(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 0,
                             ),
-                      );
-                    },
-                  ),
+                            separatorBuilder:
+                                (context, index) => 10.verticalSpace,
+                            itemCount: model.filterusers.length,
+                            itemBuilder: (context, index) {
+                              final user = model.filterusers[index];
+                              return ChatListTile(
+                                user: user,
+                                onTap:
+                                    () => Navigator.pushNamed(
+                                      context,
+                                      chatRoom,
+                                      arguments: user,
+                                    ),
+                              );
+                            },
+                          ),
                 ),
               ],
             ),
@@ -82,15 +96,34 @@ class ChatListTile extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 1.sw * 0.05),
         leading: CircleAvatar(child: Text(user.username![0])),
         title: Text(user.username!),
+        //danh sach user van chua lastMessage nen no van se hien du nguoi dung hien tai la ng dung moi
         subtitle: Text(
-          "last message213123123131212312313231323322323233223",
+          user.lastMessage != null ? user.lastMessage!["content"] : "",
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
         trailing: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: [],
+          children: [
+            Text(
+              DateFormat(
+                "HH:mm",
+              ).format(DateTime(user.lastMessage!["timestamp"])),
+              style: small.copyWith(color: grey, fontSize: 15),
+            ),
+            5.verticalSpace,
+            user.unreadMessageCount == 0
+                ? SizedBox(height: 15)
+                : CircleAvatar(
+                  radius: 10.r,
+                  backgroundColor: black,
+                  child: Text(
+                    user.unreadMessageCount.toString(),
+                    style: TextStyle(color: white),
+                  ),
+                ),
+          ],
         ),
       ),
     );

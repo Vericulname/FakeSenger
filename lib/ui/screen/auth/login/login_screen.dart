@@ -45,7 +45,7 @@ class LoginScreen extends StatelessWidget {
                     onPressed: () {
                       try {
                         model.login();
-                        context.showSnackBar("Đăng nhập thành công");
+                        context.showSnackBar("đang đăng nhập");
                       } on FirebaseAuthException catch (e) {
                         context.showSnackBar(e.toString());
                       } catch (e) {

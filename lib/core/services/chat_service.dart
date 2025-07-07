@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatService {
   final _fire = FirebaseFirestore.instance;
@@ -49,6 +48,7 @@ class ChatService {
         .collection("chatRoom")
         .doc(chatRoomId)
         .collection("message")
+        .orderBy("timestamp", descending: false)
         .snapshots();
   }
 }

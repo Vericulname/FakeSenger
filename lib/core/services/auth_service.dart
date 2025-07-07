@@ -42,4 +42,13 @@ class AuthService {
       log(e.toString());
     }
   }
+
+  Future<void> logout() async {
+    try {
+      await _auth.signOut();
+    } on Exception catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

@@ -57,6 +57,7 @@ class ChatroomViewmodel extends Baseviewmodel {
       _chatService.updateLastMessage(
         _receiver.uid!,
         _currentUser.uid!,
+        chatRoomId,
         _controller.text,
         now.millisecondsSinceEpoch,
       );

@@ -10,3 +10,5 @@ const signup = "/signup";
 
 const messengerIcon = "assets/icon/messenger.png";
 const userIcon = "assets/icon/user.png";
+
+const appLogo = "assets/icon/logo.png";

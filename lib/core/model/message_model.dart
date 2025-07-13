@@ -15,22 +15,6 @@ class MessageModel {
     this.timestamp,
   });
 
-  MessageModel copyWith({
-    String? message,
-    String? id,
-    String? senderId,
-    String? receiverId,
-    DateTime? timestamp,
-  }) {
-    return MessageModel(
-      message: message ?? this.message,
-      id: id ?? this.id,
-      senderId: senderId ?? this.senderId,
-      receiverId: receiverId ?? this.receiverId,
-      timestamp: timestamp ?? this.timestamp,
-    );
-  }
-
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'message': message,

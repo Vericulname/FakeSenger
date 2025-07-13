@@ -18,6 +18,7 @@ class ChatService {
   updateLastMessage(
     String receiverUId,
     String currentUId,
+    String chatRoomId,
     String message,
     int timestamp,
   ) async {
@@ -26,7 +27,7 @@ class ChatService {
         "lastMessage": {
           "content": message,
           "timestamp": timestamp,
-          "senderId": currentUId,
+          "chatRoomId": chatRoomId,
         },
         "unreadMessageCount": FieldValue.increment(1),
       });
@@ -34,7 +35,7 @@ class ChatService {
         "lastMessage": {
           "content": message,
           "timestamp": timestamp,
-          "senderId": currentUId,
+          "chatRoomId": chatRoomId,
         },
         "unreadMessageCount": 0,
       });

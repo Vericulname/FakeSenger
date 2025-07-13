@@ -65,6 +65,7 @@ class ChatlistScreen extends StatelessWidget {
                                       chatRoom,
                                       arguments: user,
                                     ),
+                                currentUserUid: currentUser!.uid,
                               );
                             },
                           ),
@@ -79,13 +80,26 @@ class ChatlistScreen extends StatelessWidget {
 }
 
 class ChatListTile extends StatelessWidget {
-  const ChatListTile({super.key, required this.user, this.onTap});
+  const ChatListTile({
+    super.key,
+    required this.user,
+    this.onTap,
+    this.currentUserUid,
+  });
 
   final UserModel user;
+  final String? currentUserUid;
   final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
+    bool isCorrectChatRoom =
+        user.lastMessage?["chatRoomId"] == null
+            ? false
+            : user.lastMessage!["chatRoomId"].toString().contains(
+              currentUserUid!,
+            );
+
     return Material(
       child: ListTile(
         onTap: onTap,
@@ -98,7 +112,11 @@ class ChatListTile extends StatelessWidget {
         title: Text(user.username!),
         //danh sach user van chua lastMessage nen no van se hien du nguoi dung hien tai la ng dung moi
         subtitle: Text(
-          user.lastMessage != null ? user.lastMessage!["content"] : "",
+          !isCorrectChatRoom
+              ? ""
+              : user.lastMessage == null
+              ? ""
+              : user.lastMessage!["content"],
           overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
@@ -107,13 +125,19 @@ class ChatListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              DateFormat(
-                "HH:mm",
-              ).format(DateTime(user.lastMessage!["timestamp"])),
+              user.lastMessage?["timestamp"] != null
+                  ? ""
+                  : !isCorrectChatRoom
+                  ? ""
+                  : DateFormat(
+                    "HH:mm",
+                  ).format(DateTime(user.lastMessage!["timestamp"])),
               style: small.copyWith(color: grey, fontSize: 15),
             ),
             5.verticalSpace,
             user.unreadMessageCount == 0
+                ? SizedBox(height: 15)
+                : !isCorrectChatRoom
                 ? SizedBox(height: 15)
                 : CircleAvatar(
                   radius: 10.r,
